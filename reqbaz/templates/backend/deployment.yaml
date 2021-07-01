@@ -1,0 +1,119 @@
+apiVersion: {{ include "common.capabilities.deployment.apiVersion" . }}
+kind: Deployment
+metadata:
+  labels: {{- include "common.labels.standard" . | nindent 4 }}
+    app.kubernetes.io/component: reqbaz
+    {{- if .Values.commonLabels }}
+    {{- include "common.tplvalues.render" ( dict "value" .Values.commonLabels "context" $ ) | nindent 4 }}
+    {{- end }}
+  name: {{ include "common.names.fullname" . }}-reqbaz
+  {{- if .Values.commonAnnotations }}
+  annotations: {{- include "common.tplvalues.render" ( dict "value" .Values.commonAnnotations "context" $ ) | nindent 4 }}
+  {{- end }}
+spec:
+  replicas: {{ .Values.reqbaz.replicaCount }}
+  {{- if .Values.reqbaz.updateStrategy }}
+  strategy: {{- toYaml .Values.reqbaz.updateStrategy | nindent 4 }}
+  {{- end }}
+  selector:
+    matchLabels: {{- include "common.labels.matchLabels" . | nindent 6 }}
+      app.kubernetes.io/component: reqbaz
+  template:
+    metadata:
+      {{- if .Values.reqbaz.podAnnotations }}
+      annotations: {{- include "common.tplvalues.render" (dict "value" .Values.reqbaz.podAnnotations "context" $) | nindent 8 }}
+      {{- end }}
+      labels: {{- include "common.labels.standard" . | nindent 8 }}
+        app.kubernetes.io/component: reqbaz
+        {{- if .Values.reqbaz.podLabels }}
+        {{- include "common.tplvalues.render" (dict "value" .Values.reqbaz.podLabels "context" $) | nindent 8 }}
+        {{- end }}
+    spec:
+      serviceAccountName: {{ include "reqbaz.serviceAccountName" . }}
+      {{- if .Values.reqbaz.affinity }}
+      affinity: {{- include "common.tplvalues.render" ( dict "value" .Values.reqbaz.affinity "context" $) | nindent 8 }}
+      {{- else }}
+      {{- if or .Values.reqbaz.podAffinity .Values.reqbaz.podAntiAffinity .Values.reqbaz.nodeAffinity }}
+      affinity:
+        {{- if .Values.reqbaz.podAffinity }}
+        podAffinity: {{- include "common.affinities.pods" (dict "type" .Values.reqbaz.podAffinityPreset "component" "reqbaz" "context" $) | nindent 10 }}
+        {{- end }}
+        {{- if .Values.reqbaz.podAntiAffinity }}
+        podAntiAffinity: {{- include "common.affinities.pods" (dict "type" .Values.reqbaz.podAntiAffinityPreset "component" "reqbaz" "context" $) | nindent 10 }}
+        {{- end }}
+        {{- if .Values.reqbaz.nodeAffinity -}}
+        nodeAffinity: {{- include "common.affinities.nodes" (dict "type" .Values.reqbaz.nodeAffinityPreset.type "key" .Values.reqbaz.nodeAffinityPreset.key "values" .Values.reqbaz.nodeAffinityPreset.values) | nindent 10 }}
+        {{- end }}
+      {{- end }}
+      {{- end }}
+      {{- if .Values.reqbaz.nodeSelector }}
+      nodeSelector: {{- include "common.tplvalues.render" ( dict "value" .Values.reqbaz.nodeSelector "context" $) | nindent 8 }}
+      {{- end }}
+      {{- if .Values.reqbaz.tolerations }}
+      tolerations: {{- include "common.tplvalues.render" (dict "value" .Values.reqbaz.tolerations "context" .) | nindent 8 }}
+      {{- end }}
+      {{- if .Values.reqbaz.priorityClassName }}
+      priorityClassName: {{ .Values.reqbaz.priorityClassName | quote }}
+      {{- end }}
+      {{- if .Values.reqbaz.podSecurityContext.enabled }}
+      securityContext: {{- omit .Values.reqbaz.podSecurityContext "enabled" | toYaml | nindent 8 }}
+      {{- end }}
+      {{- if .Values.reqbaz.initContainers }}
+      initContainers:
+          {{- include "common.tplvalues.render" (dict "value" .Values.reqbaz.initContainers "context" $) | nindent 8 }}
+      {{- end }}
+      containers:
+        - name: reqbaz
+          image: {{ include "reqbaz.backend.image" . }}
+          imagePullPolicy: {{ .Values.reqbaz.image.pullPolicy }}
+          {{- if .Values.reqbaz.lifecycleHooks }}
+          lifecycle: {{- include "common.tplvalues.render" (dict "value" .Values.reqbaz.lifecycleHooks "context" $) | nindent 12 }}
+          {{- end }}
+          {{- if .Values.reqbaz.containerSecurityContext.enabled }}
+          securityContext: {{- omit .Values.reqbaz.containerSecurityContext "enabled" | toYaml | nindent 12 }}
+          {{- end }}
+          {{- if .Values.reqbaz.command }}
+          command: {{- include "common.tplvalues.render" (dict "value" .Values.reqbaz.command "context" $) | nindent 12 }}
+          {{- end }}
+          {{- if .Values.reqbaz.args }}
+          args: {{- include "common.tplvalues.render" (dict "value" .Values.reqbaz.args "context" $) | nindent 12 }}
+          {{- end }}
+          ports:
+          - containerPort: {{ .Values.reqbaz.service.port }}
+            protocol: TCP
+            name: http
+          - containerPort: {{ .Values.reqbaz.service.l2pport }}
+            protocol: TCP
+            name: las2peer
+          env:
+            {{- if .Values.reqbaz.extraEnvVars }}
+            {{- include "common.tplvalues.render" (dict "value" .Values.reqbaz.extraEnvVars "context" $) | nindent 12 }}
+            {{- end }}
+          {{- if or .Values.reqbaz.extraEnvVarsCM .Values.reqbaz.extraEnvVarsSecret }}
+          envFrom:
+            {{- if .Values.reqbaz.extraEnvVarsCM }}
+            - configMapRef:
+                name: {{ include "common.tplvalues.render" (dict "value" .Values.reqbaz.extraEnvVarsCM "context" $) }}
+            {{- end }}
+            {{- if .Values.reqbaz.extraEnvVarsSecret }}
+            - secretRef:
+                name: {{ include "common.tplvalues.render" (dict "value" .Values.reqbaz.extraEnvVarsSecret "context" $) }}
+            {{- end }}
+          {{- end }}
+          {{- if .Values.reqbaz.resources }}
+          resources: {{- toYaml .Values.reqbaz.resources | nindent 12 }}
+          {{- end }}
+          {{- if .Values.reqbaz.livenessProbe.enabled }}
+          livenessProbe: {{- include "common.tplvalues.render" (dict "value" (omit .Values.reqbaz.livenessProbe "enabled") "context" $) | nindent 12 }}
+          {{- else if .Values.reqbaz.customLivenessProbe }}
+          livenessProbe: {{- include "common.tplvalues.render" (dict "value" .Values.reqbaz.customLivenessProbe "context" $) | nindent 12 }}
+          {{- end }}
+          {{- if .Values.reqbaz.readinessProbe.enabled }}
+          readinessProbe: {{- include "common.tplvalues.render" (dict "value" (omit .Values.reqbaz.readinessProbe "enabled") "context" $) | nindent 12 }}
+          {{- else if .Values.reqbaz.customReadinessProbe }}
+          readinessProbe: {{- include "common.tplvalues.render" (dict "value" .Values.reqbaz.customReadinessProbe "context" $) | nindent 12 }}
+          {{- end }}
+          {{- if .Values.reqbaz.extraVolumeMounts }}
+          volumeMounts:
+          {{- include "common.tplvalues.render" (dict "value" .Values.reqbaz.extraVolumeMounts "context" $) | nindent 12 }}
+          {{- end }}

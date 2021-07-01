@@ -1,0 +1,32 @@
+apiVersion: v2
+name: fileservice
+description: A Helm chart to deploy las2peer-FileService on Kubernetes
+type: application
+
+# This is the chart version. This version number should be incremented each time you make changes
+# to the chart and its templates, including the app version.
+# Versions are expected to follow Semantic Versioning (https://semver.org/)
+version: 0.1.0
+
+# This is the version number of the application being deployed. This version number should be
+# incremented each time you make changes to the application. Versions are not expected to
+# follow Semantic Versioning. They should reflect the version the application is using.
+# It is recommended to use it with quotes.
+appVersion: "3.0.0"
+dependencies:
+  - name: common
+    repository: https://charts.bitnami.com/bitnami
+    tags:
+      - bitnami-common
+    version: 1.x.x
+engine: gotpl
+home: https://github.com/rwth-acis/las2peer-FileService
+icon: ""
+keywords:
+  - files
+  - las2peer
+maintainers:
+  - email: las2peer@dbis.rwth-aachen.de
+    name: las2peer Development Team
+sources:
+  - https://github.com/rwth-acis/las2peer-FileService

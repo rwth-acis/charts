@@ -1,0 +1,14 @@
+Requirements Bazaar is now deployed:
+
+1. Get the application URL by running these commands:
+
+{{- if .Values.ingress.enabled }}
+  http{{ if .Values.ingress.tls.enabled }}s{{ end }}://{{ .Values.ingress.host}}
+{{- end }}
+
+2. Get the deployment information:
+
+  kubectl get pods --namespace {{ .Release.Namespace }} --selector "app.kubernetes.io/instance"={{ .Release.Name }}
+
+{{- include "common.warnings.rollingTag" .Values.reqbaz.image }}
+{{- include "common.warnings.rollingTag" .Values.frontend.image }}
