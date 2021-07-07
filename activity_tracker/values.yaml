@@ -29,10 +29,10 @@ networkpolicies:
 
 ingress:
   enabled: false
-  host: fileservice.local
+  host: activitytracker.local
   tls:
     enabled: false
-    secretName: fileservice-tls
+    secretName: activitytracker-tls
   annotations: {}
 
 ## File Service Configuration
@@ -41,8 +41,8 @@ replicaCount: 1
 
 image:
   registry: docker.io
-  repository: rwthacis/las2peer-file-service
-  tag: develop
+  repository:  rwthacis/las2peer-activity-tracker
+  tag: postgres-test
   ## Specify a imagePullPolicy
   ## Defaults to 'Always' if image tag is 'latest', else set to 'IfNotPresent'
   ## ref: http://kubernetes.io/docs/user-guide/images/#pre-pulling-images
@@ -283,3 +283,12 @@ serviceAccount:
   ## If not set and create is true, a name is generated using the fullname template
   ##
   name:
+
+## This configures a postgresql instance to be used
+## Set install to true to install a new postgres instance
+## If you use an operator set to false and provide the secret references
+## Additional options, as defined in https://github.com/bitnami/charts/blob/master/bitnami/postgresql/values.yaml can be specified as well
+postgresql:
+  install: true
+  postgresqlUsername: reqbaztrack
+  postgresqlDatabase: reqbaztrack

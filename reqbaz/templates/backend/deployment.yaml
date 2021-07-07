@@ -59,6 +59,10 @@ spec:
       securityContext: {{- omit .Values.reqbaz.podSecurityContext "enabled" | toYaml | nindent 8 }}
       {{- end }}
       {{- if .Values.reqbaz.initContainers }}
+      volumes:
+        - name: reqbaz-pastry-persistent-storage
+          persistentVolumeClaim:
+            claimName: {{ include "common.names.fullname" . }}
       initContainers:
           {{- include "common.tplvalues.render" (dict "value" .Values.reqbaz.initContainers "context" $) | nindent 8 }}
       {{- end }}
@@ -115,5 +119,7 @@ spec:
           {{- end }}
           {{- if .Values.reqbaz.extraVolumeMounts }}
           volumeMounts:
+            - name: reqbaz-pastry-persistent-storage
+              mountPath: /src/node-storage
           {{- include "common.tplvalues.render" (dict "value" .Values.reqbaz.extraVolumeMounts "context" $) | nindent 12 }}
           {{- end }}

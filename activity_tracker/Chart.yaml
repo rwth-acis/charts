@@ -1,6 +1,6 @@
 apiVersion: v2
-name: reqbaz
-description: A Helm chart to deploy Requirements Bazaar on Kubernetes
+name: activitytracker
+description: A Helm chart to deploy las2peer-ActivityTracker on Kubernetes
 type: application
 
 # This is the chart version. This version number should be incremented each time you make changes
@@ -12,12 +12,13 @@ version: 0.1.0
 # incremented each time you make changes to the application. Versions are not expected to
 # follow Semantic Versioning. They should reflect the version the application is using.
 # It is recommended to use it with quotes.
-appVersion: "0.9.0"
+appVersion: "3.0.0"
 dependencies:
   - name: common
     repository: https://charts.bitnami.com/bitnami
     tags:
       - bitnami-common
+      - bitnami
     version: 1.x.x
   - name: postgresql
     repository: https://charts.bitnami.com/bitnami
@@ -27,13 +28,13 @@ dependencies:
     version: 10.x.x
     condition: postgresql.install
 engine: gotpl
-home: https://requirements-bazaar.org
+home: https://github.com/rwth-acis/las2peer-ActivityTracker
 icon: ""
 keywords:
+  - files
   - las2peer
-  - requirements
 maintainers:
-  - email: reqbaz@dbis.rwth-aachen.de
-    name: Requirements Bazaar Development Team
+  - email: las2peer@dbis.rwth-aachen.de
+    name: las2peer Development Team
 sources:
-  - https://github.com/rwth-acis/RequirementsBazaar
+  - https://github.com/rwth-acis/las2peer-ActivityTracker

@@ -42,9 +42,9 @@ reqbaz:
   enabled: true
   replicaCount: 1
   image:
-    registry: rotterdam.selfnet.de
-    repository: kniffel/sipam/backend
-    tag: latest
+    registry: ghcr.io
+    repository: rwth-acis/requirementsbazaar
+    tag: postgres-test
     ## Specify a imagePullPolicy
     ## Defaults to 'Always' if image tag is 'latest', else set to 'IfNotPresent'
     ## ref: http://kubernetes.io/docs/user-guide/images/#pre-pulling-images
@@ -221,18 +221,17 @@ reqbaz:
       ## If you specify the password here in plaintext
       ## you need to enable the variable .Values.backend.dbSecret.create
       password: ""
-      # username: sipam
-      # name: sipam
-      # host: postgres
-      # port: 5432
-    oidc:
-      enabled: false
-      endpoint: "https://example.com/auth/realms/master/"
-      clientId: sipam
-      groupClaim: "groups"
-      allowedGroups:
-      - group1
-      - group2
+  ## Configures the persistent volume for the node storage
+  persistence:
+    # Specify an existing pvc here. The other values will  have no effect then
+    # Otherwise a new pvc will be generated
+    existingClaim: ""
+    # Uncomment if not the default should be used.
+    #storageClass: -
+    size: 5G
+    accessModes:
+      - ReadWriteOnce
+
 
   ## Additional environment variables to set
   ## Example:
@@ -283,12 +282,12 @@ reqbaz:
   sidecars: {}
 
 frontend:
-  enabled: true
+  enabled: false
   replicaCount: 1
   image:
-    registry: rotterdam.selfnet.de
-    repository: kniffel/sipam/frontend
-    tag: latest
+    registry: ghcr.io
+    repository: rwth-acis/requirementsbazaar-frontend
+    tag: develop
     ## Specify a imagePullPolicy
     ## Defaults to 'Always' if image tag is 'latest', else set to 'IfNotPresent'
     ## ref: http://kubernetes.io/docs/user-guide/images/#pre-pulling-images
@@ -524,3 +523,12 @@ serviceAccount:
   ## If not set and create is true, a name is generated using the fullname template
   ##
   name:
+
+## This configures a postgresql instance to be used for reqbaz
+## Set install to true to install a new postgres instance
+## If you use an operator set to false and provide the secret references
+## Additional options, as defined in https://github.com/bitnami/charts/blob/master/bitnami/postgresql/values.yaml can be specified as well
+postgresql:
+  install: true
+  postgresqlUsername: reqbaztrack
+  postgresqlDatabase: reqbaztrack
