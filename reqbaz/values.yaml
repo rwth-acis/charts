@@ -213,14 +213,21 @@ reqbaz:
 
   config:
     debug: false
-    django:
-      secret: ""
-      logLevel: error
+    # Specify a bootstrap node. If left out the node will set up its own network
+    # bootstrap: bootstrap.svc
+    base_url: https://requirements-bazaar.org/bazaar/
+    frontend_base_url: https://requirements-bazaar.org
+    activity_tracker_service: de.rwth.dbis.acis.activitytracker.service.ActivityTrackerService@0.8
+    email:
+      enabled: false
+      smtp_server: mail.internal
+      from_address: mail@localhost
     db:
-      ##
-      ## If you specify the password here in plaintext
-      ## you need to enable the variable .Values.backend.dbSecret.create
-      password: ""
+      username: reqbaz
+      host: postgres.svc.cluster.local
+      # Database passwords can only be specified via a secret.
+      # When using the bundled postgres database one will be automatically created
+      passwordSecret: postgres-data
   ## Configures the persistent volume for the node storage
   persistence:
     # Specify an existing pvc here. The other values will  have no effect then
@@ -530,5 +537,5 @@ serviceAccount:
 ## Additional options, as defined in https://github.com/bitnami/charts/blob/master/bitnami/postgresql/values.yaml can be specified as well
 postgresql:
   install: true
-  postgresqlUsername: reqbaztrack
-  postgresqlDatabase: reqbaztrack
+  postgresqlUsername: reqbaz
+  postgresqlDatabase: reqbaz
