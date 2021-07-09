@@ -99,7 +99,10 @@ spec:
             - name: POSTGRES_USER
               value: {{ .Values.reqbaz.config.db.username }}
             - name: POSTGRES_PASSWORD
-              value:
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.reqbaz.config.db.passwordSecret }}
+                  key: {{ .Values.reqbaz.config.db.secretKey }}
 
             - name: BASE_URL
               value: {{ .Values.reqbaz.config.base_url }}

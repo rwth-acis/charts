@@ -224,10 +224,12 @@ reqbaz:
       from_address: mail@localhost
     db:
       username: reqbaz
-      host: postgres.svc.cluster.local
+      host: reqbaz-postgres
       # Database passwords can only be specified via a secret.
       # When using the bundled postgres database one will be automatically created
-      passwordSecret: postgres-data
+      passwordSecret: reqbaz-postgresql
+      # The key to mount from the secret
+      secretKey:  postgresql-password
   ## Configures the persistent volume for the node storage
   persistence:
     # Specify an existing pvc here. The other values will  have no effect then
