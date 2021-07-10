@@ -67,9 +67,6 @@ spec:
         - name: init-migrations
           emptyDir: {}
       initContainers:
-        - name: init-postgres
-          image: busybox
-          command: ['sh', '-c', 'until nslookup {{ .Values.reqbaz.config.db.host }}; do echo waiting for postgres; sleep 2; done;']
         - name: liquibase-migrations
           image: {{ include "reqbaz.backend.initImage" . }}
           imagePullPolicy: {{ .Values.reqbaz.initImage.pullPolicy }}
