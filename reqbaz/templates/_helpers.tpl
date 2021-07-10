@@ -70,6 +70,13 @@ Return the proper backend image name
 {{ include "common.images.image" (dict "imageRoot" .Values.reqbaz.image "global" .Values.global) }}
 {{- end -}}
 
+{/*
+Return the proper backend init image name
+*/}}
+{{- define "reqbaz.backend.initImage" -}}
+{{ include "common.images.image" (dict "imageRoot" .Values.reqbaz.initImage "global" .Values.global) }}
+{{- end -}}
+
 {{/*
 Return the proper frontend image name
 */}}

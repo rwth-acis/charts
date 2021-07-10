@@ -44,6 +44,22 @@ reqbaz:
   image:
     registry: ghcr.io
     repository: rwth-acis/requirementsbazaar
+    initRepository: rwth-acis/requirementsbazaar-init
+    tag: postgres-test
+    ## Specify a imagePullPolicy
+    ## Defaults to 'Always' if image tag is 'latest', else set to 'IfNotPresent'
+    ## ref: http://kubernetes.io/docs/user-guide/images/#pre-pulling-images
+    ##
+    pullPolicy: Always
+    ## Optionally specify an array of imagePullSecrets.
+    ## Secrets must be manually created in the namespace.
+    ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
+    ##
+    # pullSecrets:
+    #   - myRegistryKeySecretName
+  initImage:
+    registry: ghcr.io
+    repository: rwth-acis/requirementsbazaar-init
     tag: postgres-test
     ## Specify a imagePullPolicy
     ## Defaults to 'Always' if image tag is 'latest', else set to 'IfNotPresent'
@@ -224,7 +240,7 @@ reqbaz:
       from_address: mail@localhost
     db:
       username: reqbaz
-      host: reqbaz-postgres
+      host: reqbaz-postgresql
       # Database passwords can only be specified via a secret.
       # When using the bundled postgres database one will be automatically created
       passwordSecret: reqbaz-postgresql

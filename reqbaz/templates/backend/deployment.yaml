@@ -62,10 +62,23 @@ spec:
         - name: reqbaz-pastry-persistent-storage
           persistentVolumeClaim:
             claimName: {{ include "common.names.fullname" . }}
-      {{- if .Values.reqbaz.initContainers }}
       initContainers:
-          {{- include "common.tplvalues.render" (dict "value" .Values.reqbaz.initContainers "context" $) | nindent 8 }}
-      {{- end }}
+        - name: liquibase-migrations
+          image: {{ include "reqbaz.backend.initImage" . }}
+          imagePullPolicy: {{ .Values.reqbaz.initImage.pullPolicy }}
+          env:
+            - name: HOST
+              value: {{ .Values.reqbaz.config.db.host }}
+            - name: USERNAME
+              value: {{ .Values.reqbaz.config.db.username }}
+            - name: PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.reqbaz.config.db.passwordSecret }}
+                  key: {{ .Values.reqbaz.config.db.secretKey }}
+        {{- if .Values.reqbaz.initContainers }}
+        {{- include "common.tplvalues.render" (dict "value" .Values.reqbaz.initContainers "context" $) | nindent 8 }}
+        {{- end }}
       containers:
         - name: reqbaz
           image: {{ include "reqbaz.backend.image" . }}
