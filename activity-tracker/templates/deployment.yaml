@@ -117,18 +117,18 @@ spec:
               value: {{ .Values.config.bootstrap }}
             {{- end }}
             - name: LAS2PEER_PORT
-              value: {{ .Values.service.l2pport }}
+              value: "{{ .Values.service.l2pport }}"
             - name: POSTGRES_HOST
-              value: {{ .Values.config.db.host }}
+              value: "{{ .Values.config.db.host }}"
             - name: POSTGRES_USER
-              value: {{ .Values.config.db.username }}
+              value: "{{ .Values.config.db.username }}"
             - name: POSTGRES_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: {{ .Values.config.db.passwordSecret }}
-                  key: {{ .Values.config.db.secretKey }}
+                  name: "{{ .Values.config.db.passwordSecret }}"
+                  key: "{{ .Values.config.db.secretKey }}"
             - name: BASE_URL
-              value: {{ .Values.config.base_url }}
+              value: "{{ .Values.config.base_url }}"
             {{- if .Values.extraEnvVars }}
             {{- include "common.tplvalues.render" (dict "value" .Values.extraEnvVars "context" $) | nindent 12 }}
             {{- end }}

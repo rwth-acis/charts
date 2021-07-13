@@ -114,34 +114,34 @@ spec:
           env:
             {{- if .Values.reqbaz.config.bootstrap }}
             - name: BOOTSTRAP
-              value: {{ .Values.reqbaz.config.bootstrap }}
+              value: "{{ .Values.reqbaz.config.bootstrap }}"
             {{- end }}
             - name: LAS2PEER_PORT
-              value: {{ .Values.reqbaz.service.l2pport }}
+              value: "{{ .Values.reqbaz.service.l2pport }}"
             - name: POSTGRES_HOST
-              value: {{ .Values.reqbaz.config.db.host }}
+              value: "{{ .Values.reqbaz.config.db.host }}"
             - name: POSTGRES_USER
-              value: {{ .Values.reqbaz.config.db.username }}
+              value: "{{ .Values.reqbaz.config.db.username }}"
             - name: POSTGRES_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: {{ .Values.reqbaz.config.db.passwordSecret }}
-                  key: {{ .Values.reqbaz.config.db.secretKey }}
+                  name: "{{ .Values.reqbaz.config.db.passwordSecret }}"
+                  key: "{{ .Values.reqbaz.config.db.secretKey }}"
 
             - name: BASE_URL
-              value: {{ .Values.reqbaz.config.base_url }}
+              value: "{{ .Values.reqbaz.config.base_url }}"
             - name: FRONTEND_BASE_URL
-              value: {{ .Values.reqbaz.config.frontend_base_url }}
+              value: "{{ .Values.reqbaz.config.frontend_base_url }}"
             - name: ACTIVITY_TRACKER_SERVICE
-              value: {{ .Values.reqbaz.config.activity_tracker_service }}
+              value: "{{ .Values.reqbaz.config.activity_tracker_service }}"
             - name: ACTIVITY_TRACKER_ORIGIN
-              value: {{ .Values.reqbaz.config.frontend_base_url }}
+              value: "{{ .Values.reqbaz.config.frontend_base_url }}"
 
             {{- if .Values.reqbaz.config.email.enabled }}
             - name: SMTP_SERVER
-              value: {{ .Values.reqbaz.config.email.host }}
+              value: "{{ .Values.reqbaz.config.email.host }}"
             - name: EMAIL_FROM_ADDRESS
-              value: {{ .Values.reqbaz.config.email.from_address }}
+              value: "{{ .Values.reqbaz.config.email.from_address }}"
             {{- end }}
             {{- if .Values.reqbaz.extraEnvVars }}
             {{- include "common.tplvalues.render" (dict "value" .Values.reqbaz.extraEnvVars "context" $) | nindent 12 }}
