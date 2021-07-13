@@ -44,7 +44,6 @@ reqbaz:
   image:
     registry: ghcr.io
     repository: rwth-acis/requirementsbazaar
-    initRepository: rwth-acis/requirementsbazaar-init
     tag: postgres-test
     ## Specify a imagePullPolicy
     ## Defaults to 'Always' if image tag is 'latest', else set to 'IfNotPresent'
@@ -563,7 +562,7 @@ postgresql:
   postgresqlPassword: password
 
 activity-tracker:
-  install: true
+  install: false
 
   config:
     bootstrap: "reqbaz:{{ .Values.reqbaz.service.l2pport }}"

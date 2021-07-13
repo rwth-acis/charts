@@ -20,28 +20,13 @@ commonAnnotations: {}
 ##
 extraDeploy: []
 
-## Enable networkpolicies to allow traffic from
-## defined namespace
-##
-networkpolicies:
-  enabled: false
-  namespace: ingress-system
-
-ingress:
-  enabled: false
-  host: activitytracker.local
-  tls:
-    enabled: false
-    secretName: activitytracker-tls
-  annotations: {}
-
 ## File Service Configuration
 ##
 replicaCount: 1
 
 image:
-  registry: docker.io
-  repository:  rwthacis/las2peer-activity-tracker
+  registry: ghcr.io
+  repository:  rwth-acis/activitytracker
   tag: postgres-test
   ## Specify a imagePullPolicy
   ## Defaults to 'Always' if image tag is 'latest', else set to 'IfNotPresent'
