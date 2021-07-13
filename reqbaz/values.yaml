@@ -566,3 +566,6 @@ activity-tracker:
 
   config:
     bootstrap: "reqbaz:{{ .Values.reqbaz.service.l2pport }}"
+
+  postgresql:
+    fullnameOverride: "{{ .Release.name }}-activity-tracker-postgres"
