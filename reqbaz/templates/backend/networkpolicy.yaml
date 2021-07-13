@@ -10,7 +10,7 @@ metadata:
     {{- if .Values.commonLabels }}
     {{- include "common.tplvalues.render" ( dict "value" .Values.commonLabels "context" $ ) | nindent 4 }}
     {{- end }}
-  name: allow-ingress-{{ include "common.names.fullname" . }}-reqbaz
+  name: allow-crosscom-{{ include "common.names.fullname" . }}-reqbaz
 spec:
   podSelector:
     matchLabels: {{- include "common.labels.matchLabels" . | nindent 6 }}
@@ -55,4 +55,33 @@ spec:
       - podSelector:
           matchLabels:
             app.kubernetes.io/component: reqbaz
+{{- end }}
+{{- if .Values.networkpolicies.enabled }}
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  {{- if .Values.commonAnnotations }}
+  annotations: {{- include "common.tplvalues.render" ( dict "value" .Values.commonAnnotations "context" $ ) | nindent 4 }}
+  {{- end }}
+  labels: {{- include "common.labels.standard" . | nindent 4 }}
+    app.kubernetes.io/component: reqbaz
+    {{- if .Values.commonLabels }}
+    {{- include "common.tplvalues.render" ( dict "value" .Values.commonLabels "context" $ ) | nindent 4 }}
+    {{- end }}
+  name: allow-ingress-{{ include "common.names.fullname" . }}-reqbaz
+spec:
+  podSelector:
+    matchLabels: {{- include "common.labels.matchLabels" . | nindent 6 }}
+      app.kubernetes.io/component: reqbaz
+  policyTypes:
+  - Ingress
+  ingress:
+  - ports:
+    - protocol: TCP
+      port: {{ .Values.backend.service.port }}
+    from:
+      - namespaceSelector:
+          matchLabels:
+            name: {{ .Values.networkpolicies.namespace }}
 {{- end }}
