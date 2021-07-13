@@ -157,7 +157,7 @@ spec:
           readinessProbe: {{- include "common.tplvalues.render" (dict "value" .Values.customReadinessProbe "context" $) | nindent 12 }}
           {{- end }}
           volumeMounts:
-            - name: reqbaz-pastry-persistent-storage
+            - name: activity-tracker-pastry-persistent-storage
               mountPath: /src/node-storage
           {{- if .Values.extraVolumeMounts }}
           {{- include "common.tplvalues.render" (dict "value" .Values.extraVolumeMounts "context" $) | nindent 12 }}
