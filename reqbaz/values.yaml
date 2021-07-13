@@ -557,3 +557,7 @@ postgresql:
   install: true
   postgresqlUsername: reqbaz
   postgresqlDatabase: reqbaz
+
+  # OVERRIDE THIS
+  # Needs to be set for save helm upgrades without losing access to your database
+  postgresqlPassword: password
