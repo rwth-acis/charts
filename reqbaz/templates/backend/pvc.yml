@@ -4,7 +4,7 @@ apiVersion: v1
 metadata:
   name: {{ include "common.names.fullname" . }}
   labels:
-    app.kubernetes.io/component: fileservice
+    app.kubernetes.io/component: reqbaz
     {{- if .Values.commonLabels }}
     {{- include "common.tplvalues.render" ( dict "value" .Values.commonLabels "context" $ ) | nindent 4 }}
     {{- end }}
