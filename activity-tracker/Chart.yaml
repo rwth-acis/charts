@@ -1,5 +1,5 @@
 apiVersion: v2
-name: activitytracker
+name: activity-tracker
 description: A Helm chart to deploy las2peer-ActivityTracker on Kubernetes
 type: application
 
@@ -31,7 +31,7 @@ engine: gotpl
 home: https://github.com/rwth-acis/las2peer-ActivityTracker
 icon: ""
 keywords:
-  - files
+  - activity-tracker
   - las2peer
 maintainers:
   - email: las2peer@dbis.rwth-aachen.de

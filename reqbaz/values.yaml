@@ -561,3 +561,9 @@ postgresql:
   # OVERRIDE THIS
   # Needs to be set for save helm upgrades without losing access to your database
   postgresqlPassword: password
+
+activity-tracker:
+  install: true
+
+  config:
+    bootstrap: "reqbaz:{{ .Values.reqbaz.service.l2pport }}"

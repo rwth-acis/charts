@@ -5,5 +5,8 @@ dependencies:
 - name: postgresql
   repository: https://charts.bitnami.com/bitnami
   version: 10.5.2
-digest: sha256:39ec8020880db7925e187e91c5b0ab00d6f340973ffba11b6a72e6a9b7ca0287
-generated: "2021-07-09T23:11:48.256574875+02:00"
+- name: activity_tracker
+  repository: file://../activity-tracker/
+  version: 0.1.0
+digest: sha256:68b4c634ae7967c347d1af2aa7b7bf816052762aa375fea3e8fa4980de153230
+generated: "2021-07-13T23:59:51.617567802+02:00"

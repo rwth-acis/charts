@@ -26,6 +26,11 @@ dependencies:
       - bitnami
     version: 10.x.x
     condition: postgresql.install
+  - name: activity-tracker
+    repository: file://../activity-tracker/
+    tags:
+      - activity-tracker
+    condition: activity-tracker.install
 engine: gotpl
 home: https://requirements-bazaar.org
 icon: ""

@@ -74,8 +74,8 @@ initImage:
 service:
   type: ClusterIP
   # HTTP Port
-  port: 8080
-  l2pport: 9011
+  port: 8081
+  l2pport: 9012
   nodePorts:
     http: ""
     https: ""
@@ -232,10 +232,10 @@ config:
   base_url: https://requirements-bazaar.org/activities/
   db:
     username: reqbaztrack
-    host: activoty_tracker-postgresql
+    host: activity-tracker-postgresql
     # Database passwords can only be specified via a secret.
     # When using the bundled postgres database one will be automatically created
-    passwordSecret: activity_tracker-postgresql
+    passwordSecret: activity-tracker-postgresql
     # The key to mount from the secret
     secretKey:  postgresql-password
 
