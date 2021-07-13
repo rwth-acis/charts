@@ -566,6 +566,11 @@ activity-tracker:
 
   config:
     bootstrap: "reqbaz:{{ .Values.reqbaz.service.l2pport }}"
+    db:
+      username: "{{ .Values.reqbaz.config.db.username }}"
+      host: "{{ .Values.reqbaz.config.db.host }}"
+      passwordSecret: "{{ .Values.reqbaz.config.db.passwordSecret }}"
+      secretKey: "{{ .Values.reqbaz.config.db.secretKey }}"
 
   postgresql:
-    fullnameOverride: "{{ .Release.name }}-activity-tracker-postgres"
+    install: false

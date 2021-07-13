@@ -222,7 +222,7 @@ config:
     # When using the bundled postgres database one will be automatically created
     passwordSecret: activity-tracker-postgresql
     # The key to mount from the secret
-    secretKey:  postgresql-password
+    secretKey: postgresql-password
 
 
 ## Configures the persistent volume for the node storage
