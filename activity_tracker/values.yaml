@@ -55,6 +55,22 @@ image:
   # pullSecrets:
   #   - myRegistryKeySecretName
 
+initImage:
+  registry: ghcr.io
+  repository: rwth-acis/activitytracker-init
+  tag: postgres-test
+  ## Specify a imagePullPolicy
+  ## Defaults to 'Always' if image tag is 'latest', else set to 'IfNotPresent'
+  ## ref: http://kubernetes.io/docs/user-guide/images/#pre-pulling-images
+  ##
+  pullPolicy: Always
+  ## Optionally specify an array of imagePullSecrets.
+  ## Secrets must be manually created in the namespace.
+  ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
+  ##
+  # pullSecrets:
+  #   - myRegistryKeySecretName
+
 service:
   type: ClusterIP
   # HTTP Port
@@ -211,9 +227,18 @@ updateStrategy:
 
 config:
   debug: false
-  django:
-    secret: ""
-    logLevel: error
+  # Specify a bootstrap node. If left out the node will set up its own network
+  # bootstrap: bootstrap.svc
+  base_url: https://requirements-bazaar.org/activities/
+  db:
+    username: reqbaztrack
+    host: activoty_tracker-postgresql
+    # Database passwords can only be specified via a secret.
+    # When using the bundled postgres database one will be automatically created
+    passwordSecret: activity_tracker-postgresql
+    # The key to mount from the secret
+    secretKey:  postgresql-password
+
 
 ## Configures the persistent volume for the node storage
 persistence:
@@ -292,3 +317,7 @@ postgresql:
   install: true
   postgresqlUsername: reqbaztrack
   postgresqlDatabase: reqbaztrack
+
+  # OVERRIDE THIS
+  # Needs to be set for save helm upgrades without losing access to your database
+  postgresqlPassword: password

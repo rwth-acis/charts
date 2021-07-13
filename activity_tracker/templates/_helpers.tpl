@@ -70,6 +70,13 @@ Return the proper image name
 {{ include "common.images.image" (dict "imageRoot" .Values.image "global" .Values.global) }}
 {{- end -}}
 
+{/*
+Return the proper init image name
+*/}}
+{{- define "activitytracker.initImage" -}}
+{{ include "common.images.image" (dict "imageRoot" .Values.initImage "global" .Values.global) }}
+{{- end -}}
+
 {{/* vim: set filetype=mustache: */}}
 {{/*
 Renders a value that contains template.
