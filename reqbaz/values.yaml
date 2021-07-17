@@ -565,12 +565,12 @@ activity-tracker:
   install: false
 
   config:
-    bootstrap: "reqbaz:{{ .Values.reqbaz.service.l2pport }}"
+    bootstrap: "reqbaz:9011"
     db:
-      username: "{{ .Values.reqbaz.config.db.username }}"
-      host: "{{ .Values.reqbaz.config.db.host }}"
-      passwordSecret: "{{ .Values.reqbaz.config.db.passwordSecret }}"
-      secretKey: "{{ .Values.reqbaz.config.db.secretKey }}"
+      username: reqbaz
+      host: reqbaz-postgresql
+      passwordSecret: reqbaz-postgresql
+      secretKey: postgres-password
 
   service:
     port: 8081
