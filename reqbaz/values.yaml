@@ -84,6 +84,11 @@ reqbaz:
     ## ref http://kubernetes.io/docs/tasks/access-application-cluster/create-external-load-balancer/#preserving-the-client-source-ip
     ##
     externalTrafficPolicy: Cluster
+    # Can be set to work around dual stack obscurities
+    ipFamily:
+      enabled: false
+      ipFamilyPolicy: SingleStack
+      ipFamilies: ["IPv4"]
 
   ## Configure extra options for liveness and readiness probes
   ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-probes/#configure-probes
@@ -224,7 +229,7 @@ reqbaz:
   ## terminate the single previous pod, so that the new, incoming pod can attach to the PV
   ##
   updateStrategy:
-    type: RollingUpdate
+    type: Recreate
 
   config:
     debug: false

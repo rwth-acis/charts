@@ -98,8 +98,6 @@ Usage:
     {{- end }}
 {{- end -}}
 
-
-
 {{/*
 Compile all warnings into a single message.
 */}}

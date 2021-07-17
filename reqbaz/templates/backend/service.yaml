@@ -21,6 +21,10 @@ spec:
   {{- if (and (eq .Values.reqbaz.service.type "LoadBalancer") (not (empty .Values.reqbaz.service.loadBalancerIP))) }}
   loadBalancerIP: {{ .Values.reqbaz.service.loadBalancerIP }}
   {{- end }}
+  {{- if .Values.reqbaz.service.ipFamily.enabled }}
+  ipFamilies: {{ .Values.reqbaz.service.ipFamily.ipFamilies }}
+  ipFamilyPolicy: {{ .Values.reqbaz.service.ipFamily.ipFamilyPolicy }}
+  {{- end}}
   ports:
     - name: http
       port: {{ .Values.reqbaz.service.port }}
