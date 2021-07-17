@@ -28,13 +28,32 @@ spec:
   - host: {{ .Values.ingress.host }}
     http:
       paths:
-      - path: /bazzar
+      - path: /bazaar
         pathType: Prefix
         backend:
           service:
             name: {{ include "common.names.fullname" . }}-reqbaz
             port:
               number: {{ .Values.reqbaz.service.port }}
+      {{- if index .Values "activity-tracker" "install" }}
+      - path: /activities
+        pathType: Prefix
+        backend:
+          service:
+            name: {{ include "common.names.fullname" . }}-activity-tracker
+            port:
+              number: {{ index .Values "activity-tracker" "service" "port" }}
+      {{- end }}
+      {{- if index .Values "file-service" "install" }}
+      - path: /files
+        pathType: Prefix
+        backend:
+          service:
+            name: {{ include "common.names.fullname" . }}-file-service
+            port:
+              number: {{ index .Values "file-service" "service" "port" }}
+      {{- end }}
+      {{- if .Values.frontend.enabled }}
       - path: /
         pathType: Prefix
         backend:
@@ -42,4 +61,5 @@ spec:
             name: {{ include "common.names.fullname" . }}-frontend
             port:
               number: {{ .Values.frontend.service.port }}
+      {{- end }}
 {{- end }}

@@ -572,5 +572,17 @@ activity-tracker:
       passwordSecret: "{{ .Values.reqbaz.config.db.passwordSecret }}"
       secretKey: "{{ .Values.reqbaz.config.db.secretKey }}"
 
+  service:
+    port: 8081
+
   postgresql:
     install: false
+
+file-service:
+  install: false
+
+  config:
+    bootstrap: "reqbaz:{{ .Values.reqbaz.service.l2pport }}"
+
+  service:
+    port: 8082
