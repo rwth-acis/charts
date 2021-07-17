@@ -570,7 +570,7 @@ activity-tracker:
       username: reqbaz
       host: reqbaz-postgresql
       passwordSecret: reqbaz-postgresql
-      secretKey: postgres-password
+      secretKey: postgresql-password
 
   service:
     port: 8081
