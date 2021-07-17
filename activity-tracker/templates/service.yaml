@@ -28,5 +28,8 @@ spec:
     - name: las2peer
       port: {{ .Values.service.l2pport }}
       protocol: TCP
+    - name: las2peer-pastry
+      port: {{ .Values.service.l2pport }}
+      protocol: UDP
   selector: {{- include "common.labels.matchLabels" . | nindent 4 }}
     app.kubernetes.io/component: activity-tracker

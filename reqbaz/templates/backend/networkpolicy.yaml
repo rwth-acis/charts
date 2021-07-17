@@ -23,6 +23,8 @@ spec:
       port: {{ .Values.reqbaz.service.port }}
     - protocol: TCP
       port: {{ .Values.reqbaz.service.l2pport }}
+    - protocol: UDP
+      port: {{ .Values.reqbaz.service.l2pport }}
     from:
       - namespaceSelector:
           matchLabels:

@@ -111,6 +111,9 @@ spec:
           - containerPort: {{ .Values.service.l2pport }}
             protocol: TCP
             name: las2peer
+          - containerPort: {{ .Values.service.l2pport }}
+            protocol: UDP
+            name: las2peer-pastry
           env:
             - name: POD_IP
               valueFrom:

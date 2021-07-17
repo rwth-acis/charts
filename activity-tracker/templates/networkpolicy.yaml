@@ -23,6 +23,8 @@ spec:
       port: {{ .Values.service.port }}
     - protocol: TCP
       port: {{ .Values.service.l2pport }}
+    - protocol: UDP
+      port: {{ .Values.service.l2pport }}
     from:
       - namespaceSelector:
           matchLabels:

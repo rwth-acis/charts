@@ -28,5 +28,8 @@ spec:
     - name: las2peer
       port: {{ .Values.reqbaz.service.l2pport }}
       protocol: TCP
+    - name: las2peer-pastry
+      port: {{ .Values.reqbaz.service.l2pport }}
+      protocol: UDP
   selector: {{- include "common.labels.matchLabels" . | nindent 4 }}
     app.kubernetes.io/component: reqbaz
