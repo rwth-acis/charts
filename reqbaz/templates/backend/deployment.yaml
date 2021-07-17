@@ -112,6 +112,10 @@ spec:
             protocol: TCP
             name: las2peer
           env:
+            - name: POD_IP
+              valueFrom:
+                fieldRef:
+                  fieldPath: status.podIP
             {{- if .Values.reqbaz.config.bootstrap }}
             - name: BOOTSTRAP
               value: "{{ .Values.reqbaz.config.bootstrap }}"
