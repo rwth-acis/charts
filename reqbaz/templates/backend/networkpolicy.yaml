@@ -74,14 +74,18 @@ metadata:
   name: allow-ingress-{{ include "common.names.fullname" . }}-reqbaz
 spec:
   podSelector:
-    matchLabels: {{- include "common.labels.matchLabels" . | nindent 6 }}
-      app.kubernetes.io/component: reqbaz
+    matchLabels:
+      app.kubernetes.io/service: reqbaz
   policyTypes:
   - Ingress
   ingress:
   - ports:
     - protocol: TCP
       port: {{ .Values.reqbaz.service.port }}
+    - protocol: TCP
+      port: {{ index .Values "activity-tracker" "service" "port" }}
+    - protocol: TCP
+      port: {{ index .Values "file-service" "service" "port" }}
     from:
       - namespaceSelector:
           matchLabels:

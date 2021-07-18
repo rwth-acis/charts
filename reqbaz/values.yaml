@@ -583,6 +583,10 @@ activity-tracker:
   postgresql:
     install: false
 
+  # Add labels for network policy mappings
+  podLabels:
+    app.kubernetes.io/service: reqbaz
+
 file-service:
   install: false
 
@@ -591,3 +595,6 @@ file-service:
 
   service:
     port: 8082
+
+  podLabels:
+    app.kubernetes.io/service: reqbaz
