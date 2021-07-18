@@ -591,7 +591,7 @@ file-service:
   install: false
 
   config:
-    bootstrap: "reqbaz:{{ .Values.reqbaz.service.l2pport }}"
+    bootstrap: "reqbaz:9011"
 
   service:
     port: 8082

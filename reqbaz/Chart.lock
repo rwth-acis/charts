@@ -8,5 +8,8 @@ dependencies:
 - name: activity-tracker
   repository: file://../activity-tracker/
   version: 0.1.0
-digest: sha256:15c379022dbf3b4e0e70457f85d811eed0f4ecafcc84bca6e66c7186de8ab132
-generated: "2021-07-17T03:46:22.914418726+02:00"
+- name: file-service
+  repository: file://../file-service/
+  version: 0.1.0
+digest: sha256:cf290749941a95c0e3eb8426ea15cf517d10c430f9f3c469546ace5da8f9f9a7
+generated: "2021-07-18T15:48:21.385966128+02:00"
