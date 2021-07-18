@@ -125,6 +125,8 @@ spec:
             {{- end }}
             - name: LAS2PEER_PORT
               value: "{{ .Values.reqbaz.service.l2pport }}"
+            - name: HTTP_PORT
+              value: "{{ .Values.reqbaz.service.port }}"
             - name: POSTGRES_HOST
               value: "{{ .Values.reqbaz.config.db.host }}"
             - name: POSTGRES_USER
