@@ -27,14 +27,6 @@ networkpolicies:
   enabled: false
   namespace: ingress-system
 
-ingress:
-  enabled: false
-  host: fileservice.local
-  tls:
-    enabled: false
-    secretName: fileservice-tls
-  annotations: {}
-
 ## File Service Configuration
 ##
 replicaCount: 1
@@ -67,7 +59,11 @@ service:
   ## ref http://kubernetes.io/docs/tasks/access-application-cluster/create-external-load-balancer#preserving-the-client-source-ip
   ##
   externalTrafficPolicy: Cluster
-
+  # Can be set to work around dual stack obscurities
+  ipFamily:
+    enabled: false
+    ipFamilyPolicy: SingleStack
+    ipFamilies: ["IPv4"]
 ## Configure extra options for liveness and readiness probes
 ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-probes#configure-probes
 livenessProbe:
@@ -211,9 +207,10 @@ updateStrategy:
 
 config:
   debug: false
-  django:
-    secret: ""
-    logLevel: error
+
+  # This controls which bind ip is provided into the container
+  # By default it is the primary pod ip, but also status.hostIP could be provided here.
+  bindIpKey: status.podIP
 
 ## Configures the persistent volume for the node storage
 persistence:

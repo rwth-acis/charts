@@ -2,7 +2,7 @@ apiVersion: v1
 kind: Service
 metadata:
   labels: {{- include "common.labels.standard" . | nindent 4 }}
-    app.kubernetes.io/component: fileservice
+    app.kubernetes.io/component: file-service
     {{- if .Values.commonLabels }}
     {{- include "common.tplvalues.render" ( dict "value" .Values.commonLabels "context" $ ) | nindent 4 }}
     {{- end }}
@@ -21,6 +21,10 @@ spec:
   {{- if (and (eq .Values.service.type "LoadBalancer") (not (empty .Values.service.loadBalancerIP))) }}
   loadBalancerIP: {{ .Values.service.loadBalancerIP }}
   {{- end }}
+  {{- if .Values.service.ipFamily.enabled }}
+  ipFamilies: {{ .Values.service.ipFamily.ipFamilies }}
+  ipFamilyPolicy: {{ .Values.service.ipFamily.ipFamilyPolicy }}
+  {{- end}}
   ports:
     - name: http
       port: {{ .Values.service.port }}
@@ -28,5 +32,8 @@ spec:
     - name: las2peer
       port: {{ .Values.service.l2pport }}
       protocol: TCP
+    - name: las2peer-pastry
+      port: {{ .Values.service.l2pport }}
+      protocol: UDP
   selector: {{- include "common.labels.matchLabels" . | nindent 4 }}
-    app.kubernetes.io/component: fileservice
+    app.kubernetes.io/component: file-service
